@@ -1,0 +1,155 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+ margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+  min-height: 100vh;
+  background: linear-gradient( #fbc2eb, #a6c1ee);
+  background-size: 400% 400%;
+  animation: gradientShift 20s ease infinite;
+  position: relative;
+}
+
+.container {
+  position: relative;
+  z-index: 2;
+  max-width: 520px;
+  margin: auto;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 15px;
+  font-size: 2rem;
+  color: #333;
+}
+
+.score {
+  font-size: 1rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+canvas {
+  background-color: #f9f9f9;
+  border: 2px dashed #333;
+  margin-bottom: 20px;
+}
+
+.word {
+  font-size: 2rem;
+  letter-spacing: 10px;
+  margin-bottom: 10px;
+}
+
+.hint {
+  font-style: italic;
+  color: #555;
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+#message {
+  font-size: 1.2rem;
+  color: red;
+  margin: 10px 0;
+}
+
+.keyboard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.keyboard button {
+  margin: 5px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  background-color: #432d42;
+  color: white;
+  transition: background 0.3s;
+}
+
+.keyboard button:hover {
+  background-color: #bcdfe8;
+}
+
+#restartBtn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#restartBtn:hover {
+  background-color: #388e3c;
+}
+
+@media (max-width: 500px) {
+  .word {
+    font-size: 1.5rem;
+    letter-spacing: 5px;
+  }
+
+  .keyboard button {
+    padding: 8px 10px;
+    font-size: 0.9rem;
+  }
+
+  canvas {
+    width: 100%;
+    height: auto;
+  }
+}
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.bubble {
+  position: absolute;
+  bottom: -100px;
+  background-color: rgb(171 122 122 / 47%);
+  border-radius: 50%;
+  animation: floatUp 20s linear infinite;
+  z-index: 1;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
+}
+.win-emoji {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 4rem;
+  display: none;
+  z-index: 5;
+  animation: popUp 1s ease-out forwards;
+}
+
+@keyframes popUp {
+  0% { transform: translate(-50%, 20%) scale(0); opacity: 0; }
+  50% { transform: translate(-50%, -10%) scale(1.2); opacity: 1; }
+  100% { transform: translate(-50%, -20%) scale(1); opacity: 1; }
+}
+

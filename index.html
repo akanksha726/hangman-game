@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hangman Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Hangman Game</h1>
+    <div class="score">
+      <span id="wins">Wins: 0</span> | 
+      <span id="losses">Losses: 0</span>
+    </div>
+    <div class="game-box">
+      <canvas id="hangmanCanvas" width="200" height="250"></canvas>
+      <p id="hintText" class="hint"></p>
+      <p class="word" id="wordDisplay"></p>
+      <p id="message"></p>
+      <div id="keyboard" class="keyboard"></div>
+      <button id="restartBtn">Restart Game</button>
+    </div>
+  </div>
+  <div id="winEmoji" class="win-emoji">🎉 You Win! 🎉</div>
+
+<script>
+  // Floating bubbles
+  for (let i = 0; i < 20; i++) {
+    const bubble = document.createElement('div');
+    bubble.classList.add('bubble');
+    const size = Math.random() * 60 + 20;
+    bubble.style.width = `${size}px`;
+    bubble.style.height = `${size}px`;
+    bubble.style.left = `${Math.random() * 100}%`;
+    bubble.style.animationDuration = `${10 + Math.random() * 10}s`;
+    document.body.appendChild(bubble);
+  }
+</script>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
