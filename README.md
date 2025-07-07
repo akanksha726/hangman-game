@@ -33,11 +33,9 @@ Welcome to the **Hangman Game**, a fun and interactive web-based game built usin
 
 ## 🕹️ Game Preview
 
-<div align="center">
-  <img src="assets/preview.gif" width="600" alt="Hangman Game Preview">
-  <br><br>
-  🎯 <strong>[Click Here to Play the Game! 🚀](https://akanksha726.github.io/hangman-game/)</strong>
-</div>
+![Game Preview](https://github.com/akanksha726/hangman-game/assets/animated-preview.gif)
+
+> 🎮 **[Play Now →](https://hangman-akanksha.netlify.app/)**
 
 ---
 
