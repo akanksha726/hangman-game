@@ -31,7 +31,7 @@ Welcome to the **Hangman Game**, a fun and interactive web-based game built usin
 
 ---
 
-![Game Preview](https://media.giphy.com/media/iJucnIcJ6GXrHnYx2q/giphy.gif)
+![Game Preview](https://media.giphy.com/media/1kHcKpN5QgQMU/giphy.gif)
 
 ---
 
