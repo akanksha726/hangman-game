@@ -47,6 +47,7 @@ Welcome to the **Hangman Game**, a fun and interactive web-based game built usin
 
 hangman-game
 │
+
 ├── index.html # Main game page
 
 ├── style.css # Styling for the game
