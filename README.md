@@ -30,14 +30,18 @@ Welcome to the **Hangman Game**, a fun and interactive web-based game built usin
 4. Guess the full word before the man is fully hanged!
 
 ---
- ## 🕹️ Game Preview
+
+## 🕹️ Game Preview
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/akanksha726/hangman-game/main/assets/preview.gif" width="600" alt="Hangman Game Preview">
+  <img src="assets/preview.gif" width="600" alt="Hangman Game Preview">
   <br><br>
   🎯 <strong>[Click Here to Play the Game! 🚀](https://akanksha726.github.io/hangman-game/)</strong>
 </div>
+
 ---
+
+
 ## 📁 Project Structure
 
 hangman-game
