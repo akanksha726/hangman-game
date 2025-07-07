@@ -12,16 +12,6 @@ Welcome to the **Hangman Game**, a fun and interactive web-based game built usin
 
 ---
 
-## 🕹️ Gameplay Preview
-
-![Game Preview](https://raw.githubusercontent.com/akanksha726/hangman-game/main/assets/preview.gif)
-
-🎲 **Feeling lucky?** Check out this cool [Internet Randomizer Tool 🔗](https://neal.fun/).
-
-👉 **[Play the Game Here! 🚀](https://akanksha726.github.io/hangman-game/)**
-
----
-
 ## 🚀 Features
 
 ✨ **Random Word Generator** – Get a new challenge every time  
@@ -40,7 +30,14 @@ Welcome to the **Hangman Game**, a fun and interactive web-based game built usin
 4. Guess the full word before the man is fully hanged!
 
 ---
+ ## 🕹️ Game Preview
 
+<div align="center">
+  <img src="https://raw.githubusercontent.com/akanksha726/hangman-game/main/assets/preview.gif" width="600" alt="Hangman Game Preview">
+  <br><br>
+  🎯 <strong>[Click Here to Play the Game! 🚀](https://akanksha726.github.io/hangman-game/)</strong>
+</div>
+---
 ## 📁 Project Structure
 
 hangman-game
