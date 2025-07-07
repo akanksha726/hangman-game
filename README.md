@@ -39,4 +39,16 @@ Welcome to the **Hangman Game**, a fun and interactive web-based game built usin
 
 ## 📁 Project Structure
 
+hangman-game
+│
+├── index.html # Main game page
+
+├── style.css # Styling for the game
+
+├── script.js # Game logic (JS)
+
+├── assets/ # Images and media (like hangman illustrations)
+
+└── README.md # You're reading it!
+
 
