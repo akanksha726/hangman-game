@@ -16,6 +16,10 @@ Welcome to the **Hangman Game**, a fun and interactive web-based game built usin
 
 ![Game Preview](https://raw.githubusercontent.com/akanksha726/hangman-game/main/assets/preview.gif)
 
+🎲 **Feeling lucky?** Check out this cool [Internet Randomizer Tool 🔗](https://neal.fun/).
+
+👉 **[Play the Game Here! 🚀](https://akanksha726.github.io/hangman-game/)**
+
 ---
 
 ## 🚀 Features
