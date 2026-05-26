@@ -1,5 +1,11 @@
 # hangman-game
 
+## 🔗 Live Demo
+
+👉 [**Click here to play the game**](https://hangman-akanksha.netlify.app/)
+
+---
+
 # 🎯 Hangman Game — Classic Word Guessing Fun!
 
 > **"Guess the word, or the man hangs!"**
@@ -32,12 +38,6 @@ Welcome to the **Hangman Game**, a fun and interactive web-based game built usin
 ---
 
 ![Animated Preview](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzRzazdqcTQzbnBjdGZubnhhdXgwYWRoYmNwbGZicGpldmc5OHhiOCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3o7aD2saalBwwftBIY/giphy.gif)
-
----
-
-## 🔗 Live Demo
-
-👉 [**Click here to play the game**](https://hangman-akanksha.netlify.app/)
 
 
 ---
