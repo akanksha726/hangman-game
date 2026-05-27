@@ -1,155 +1,494 @@
-* {
+/* =============================================
+   HANGMAN GAME — Premium Dark Theme
+   Mobile-first, fully responsive
+   ============================================= */
+
+/* ---------- Google Font Import ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap');
+
+/* ---------- CSS Variables (Design Tokens) ---------- */
+:root {
+  --bg-start:      #0f0c29;
+  --bg-mid:        #302b63;
+  --bg-end:        #24243e;
+
+  --card-bg:       rgba(255, 255, 255, 0.06);
+  --card-border:   rgba(255, 255, 255, 0.12);
+  --card-shadow:   0 24px 64px rgba(0, 0, 0, 0.5);
+
+  --accent:        #a78bfa;   /* violet */
+  --accent-glow:   rgba(167, 139, 250, 0.35);
+  --accent-dark:   #7c3aed;
+
+  --success:       #34d399;
+  --danger:        #f87171;
+  --text-primary:  #f1f5f9;
+  --text-muted:    #94a3b8;
+
+  --key-bg:        rgba(167, 139, 250, 0.18);
+  --key-hover:     rgba(167, 139, 250, 0.45);
+  --key-disabled:  rgba(255, 255, 255, 0.06);
+
+  --radius-sm:     10px;
+  --radius-md:     18px;
+  --radius-lg:     28px;
+
+  --transition:    0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+/* ---------- Base ---------- */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
- margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  overflow: hidden;
+  font-family: 'Outfit', 'Segoe UI', sans-serif;
   min-height: 100vh;
-  background: linear-gradient( #fbc2eb, #a6c1ee);
-  background-size: 400% 400%;
-  animation: gradientShift 20s ease infinite;
-  position: relative;
-}
-
-.container {
-  position: relative;
-  z-index: 2;
-  max-width: 520px;
-  margin: auto;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 20px;
-  border-radius: 20px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  text-align: center;
-}
-
-h1 {
-  margin-bottom: 15px;
-  font-size: 2rem;
-  color: #333;
-}
-
-.score {
-  font-size: 1rem;
-  margin-bottom: 15px;
-  color: #333;
-}
-
-canvas {
-  background-color: #f9f9f9;
-  border: 2px dashed #333;
-  margin-bottom: 20px;
-}
-
-.word {
-  font-size: 2rem;
-  letter-spacing: 10px;
-  margin-bottom: 10px;
-}
-
-.hint {
-  font-style: italic;
-  color: #555;
-  font-size: 1rem;
-  margin-bottom: 5px;
-}
-
-#message {
-  font-size: 1.2rem;
-  color: red;
-  margin: 10px 0;
-}
-
-.keyboard {
+  background: linear-gradient(135deg, var(--bg-start), var(--bg-mid), var(--bg-end));
+  background-size: 300% 300%;
+  animation: gradientShift 18s ease infinite;
+  color: var(--text-primary);
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px 16px 40px;
+  overflow-x: hidden;
+  position: relative;
 }
 
-.keyboard button {
-  margin: 5px;
-  padding: 10px 15px;
-  font-size: 1rem;
-  cursor: pointer;
-  border: none;
-  border-radius: 10px;
-  background-color: #432d42;
-  color: white;
-  transition: background 0.3s;
-}
-
-.keyboard button:hover {
-  background-color: #bcdfe8;
-}
-
-#restartBtn {
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 1rem;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-#restartBtn:hover {
-  background-color: #388e3c;
-}
-
-@media (max-width: 500px) {
-  .word {
-    font-size: 1.5rem;
-    letter-spacing: 5px;
-  }
-
-  .keyboard button {
-    padding: 8px 10px;
-    font-size: 0.9rem;
-  }
-
-  canvas {
-    width: 100%;
-    height: auto;
-  }
-}
+/* ---------- Animated Background Gradient ---------- */
 @keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
+
+/* ---------- Floating Bubbles ---------- */
 .bubble {
-  position: absolute;
-  bottom: -100px;
-  background-color: rgb(171 122 122 / 47%);
+  position: fixed;
+  bottom: -120px;
   border-radius: 50%;
-  animation: floatUp 20s linear infinite;
-  z-index: 1;
+  background: radial-gradient(circle at 30% 30%, rgba(167, 139, 250, 0.4), rgba(124, 58, 237, 0.1));
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  animation: floatUp linear infinite;
+  z-index: 0;
+  pointer-events: none;
 }
 
 @keyframes floatUp {
-  0% { transform: translateY(0) scale(1); opacity: 1; }
-  100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
+  0%   { transform: translateY(0) scale(1) rotate(0deg); opacity: 0.8; }
+  100% { transform: translateY(-115vh) scale(1.4) rotate(180deg); opacity: 0; }
 }
-.win-emoji {
+
+/* ---------- Main Container ---------- */
+.container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 560px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--card-shadow);
+  padding: 28px 24px 32px;
+  text-align: center;
+  animation: slideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(32px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ---------- Title ---------- */
+h1 {
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #c4b5fd, #818cf8, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 6px;
+  line-height: 1.2;
+}
+
+h1::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+  border-radius: 2px;
+  margin: 10px auto 0;
+}
+
+/* ---------- Score Bar ---------- */
+.score {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin: 16px 0 20px;
+}
+
+.score-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  padding: 6px 14px 6px 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: var(--text-primary);
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.score-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.score-label {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.score-value {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  min-width: 1ch;
+  text-align: right;
+}
+
+#wins   { border-color: rgba(52, 211, 153, 0.35); }
+#wins   .score-value { color: var(--success); }
+#losses { border-color: rgba(248, 113, 113, 0.35); }
+#losses .score-value { color: var(--danger); }
+
+/* ---------- Game Box (Canvas + Info) ---------- */
+.game-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+/* ---------- Canvas ---------- */
+canvas {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid var(--card-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 0 24px rgba(167, 139, 250, 0.12),
+              inset 0 0 20px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+  display: block;
+  max-width: 100%;
+  width: 220px;
+  height: auto;
+  transition: box-shadow var(--transition);
+}
+
+canvas:hover {
+  box-shadow: 0 0 36px var(--accent-glow),
+              inset 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+/* ---------- Hint ---------- */
+.hint {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 14px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--card-border);
+  max-width: 100%;
+  min-height: 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hint strong {
+  color: var(--accent);
+  font-style: normal;
+  font-weight: 600;
+}
+
+/* ---------- Word Display ---------- */
+.word {
+  font-size: clamp(1.8rem, 7vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: clamp(6px, 2vw, 14px);
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  min-height: 3rem;
+  text-shadow: 0 0 20px rgba(167, 139, 250, 0.4);
+  transition: letter-spacing var(--transition);
+}
+
+/* ---------- Message ---------- */
+#message {
+  font-size: 1.1rem;
+  font-weight: 700;
+  min-height: 2.2rem;
+  margin: 4px 0 18px;
+  border-radius: var(--radius-sm);
+  padding: 6px 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+}
+
+#message:not(:empty) {
+  animation: messagePop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes messagePop {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Dynamically set by JS — these classes auto-apply via colour logic */
+#message.win  {
+  color: var(--success);
+  background: rgba(52, 211, 153, 0.1);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+}
+#message.lose {
+  color: var(--danger);
+  background: rgba(248, 113, 113, 0.1);
+  border: 1px solid rgba(248, 113, 113, 0.3);
+}
+
+/* Fallback colouring when no class applied */
+#message {
+  color: var(--accent);
+}
+
+/* ---------- Keyboard (QWERTY rows) ---------- */
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  margin-bottom: 20px;
+  max-width: 460px;
+  width: 100%;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.keyboard button {
+  width: 38px;
+  height: 42px;
+  font-size: 0.9rem;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1px solid rgba(167, 139, 250, 0.35);
+  border-radius: var(--radius-sm);
+  background: var(--key-bg);
+  color: var(--text-primary);
+  transition: background var(--transition),
+              transform var(--transition),
+              border-color var(--transition),
+              box-shadow var(--transition);
+  outline: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.keyboard button::after {
+  content: '';
   position: absolute;
-  top: 20%;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.12), transparent);
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.keyboard button:hover:not(:disabled)::after {
+  opacity: 1;
+}
+
+.keyboard button:hover:not(:disabled) {
+  background: var(--key-hover);
+  border-color: var(--accent);
+  transform: translateY(-2px) scale(1.06);
+  box-shadow: 0 4px 16px var(--accent-glow);
+}
+
+.keyboard button:active:not(:disabled) {
+  transform: translateY(0) scale(0.97);
+}
+
+.keyboard button:disabled {
+  background: var(--key-disabled);
+  border-color: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.2);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ---------- Restart Button ---------- */
+#restartBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 36px;
+  font-size: 1rem;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 6px 24px rgba(124, 58, 237, 0.5);
+  transition: transform var(--transition),
+              box-shadow var(--transition),
+              filter var(--transition);
+  outline: none;
+  position: relative;
+  overflow: hidden;
+}
+
+#restartBtn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+#restartBtn:hover::before {
+  left: 100%;
+}
+
+#restartBtn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 32px rgba(124, 58, 237, 0.65);
+  filter: brightness(1.1);
+}
+
+#restartBtn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.4);
+}
+
+/* ---------- Win Emoji / Overlay ---------- */
+.win-emoji {
+  position: fixed;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  font-size: 4rem;
+  transform: translate(-50%, -50%);
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 800;
   display: none;
-  z-index: 5;
-  animation: popUp 1s ease-out forwards;
+  z-index: 10;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: var(--radius-lg);
+  padding: 24px 40px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  pointer-events: none;
+  animation: popUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  color: var(--text-primary);
 }
 
 @keyframes popUp {
-  0% { transform: translate(-50%, 20%) scale(0); opacity: 0; }
-  50% { transform: translate(-50%, -10%) scale(1.2); opacity: 1; }
-  100% { transform: translate(-50%, -20%) scale(1); opacity: 1; }
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
 
+/* ---------- Responsive — Tablet / Desktop ---------- */
+@media (min-width: 500px) {
+  .container {
+    padding: 36px 36px 40px;
+  }
+
+  canvas {
+    width: 240px;
+  }
+
+  .keyboard button {
+    width: 42px;
+    height: 46px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (min-width: 700px) {
+  body {
+    justify-content: center;
+    padding: 40px 20px;
+  }
+}
+
+/* ---------- Small phones (max 360px) ---------- */
+@media (max-width: 360px) {
+  .container {
+    padding: 20px 14px 28px;
+    border-radius: var(--radius-md);
+  }
+
+  .keyboard button {
+    width: 30px;
+    height: 36px;
+    font-size: 0.78rem;
+  }
+
+  .keyboard-row {
+    gap: 4px;
+  }
+
+  .word {
+    letter-spacing: 4px;
+  }
+
+  canvas {
+    width: 180px;
+  }
+}
+
+/* ---------- Scrollbar (desktop) ---------- */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent-dark);
+  border-radius: 3px;
+}

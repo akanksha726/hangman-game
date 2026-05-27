@@ -66,12 +66,15 @@ const restartBtn = document.getElementById('restartBtn');
 const hintText = document.getElementById('hintText');
 const canvas = document.getElementById('hangmanCanvas');
 const ctx = canvas.getContext('2d');
-const winDisplay = document.getElementById('wins');
-const lossDisplay = document.getElementById('losses');
+const winValue = document.getElementById('winsValue');
+const lossValue = document.getElementById('lossesValue');
+
+let winOverlayTimer = null;
 
 function drawHangman(step) {
-  ctx.lineWidth = 2;
-  ctx.strokeStyle = '#333';
+  ctx.lineWidth = 3;
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = '#e2e8f0';
   switch (step) {
     case 0:
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -129,10 +132,13 @@ function displayWord() {
   wordDisplay.textContent = display;
 
   if (!display.includes('_')) {
-    message.textContent = 'You won!';
+    message.textContent = '🎉 You won!';
+    message.className = 'win';
     winCount++;
-    winDisplay.textContent = `Wins: ${winCount}`;
-     winEmoji.style.display = 'block';
+    winValue.textContent = winCount;
+    winEmoji.style.display = 'block';
+    clearTimeout(winOverlayTimer);
+    winOverlayTimer = setTimeout(() => { winEmoji.style.display = 'none'; }, 2200);
     disableKeyboard();
   }
 }
@@ -149,9 +155,10 @@ function handleGuess(letter) {
     wrongGuesses++;
     drawHangman(wrongGuesses);
     if (wrongGuesses === maxWrong) {
-      message.textContent = `You lost! Word was: "${selectedWord}"`;
+      message.textContent = `💀 Word was: "${selectedWord}"`;
+      message.className = 'lose';
       lossCount++;
-      lossDisplay.textContent = `Losses: ${lossCount}`;
+      lossValue.textContent = lossCount;
       disableKeyboard();
     }
   }
@@ -163,24 +170,31 @@ function disableKeyboard() {
 
 function generateKeyboard() {
   keyboard.innerHTML = '';
-  for (let i = 65; i <= 90; i++) {
-    const letter = String.fromCharCode(i).toLowerCase();
-    const btn = document.createElement('button');
-    btn.textContent = letter;
-    btn.id = letter;
-    btn.addEventListener('click', () => handleGuess(letter));
-    keyboard.appendChild(btn);
-  }
+  const rows = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm'];
+  rows.forEach(row => {
+    const rowEl = document.createElement('div');
+    rowEl.className = 'keyboard-row';
+    for (const letter of row) {
+      const btn = document.createElement('button');
+      btn.textContent = letter;
+      btn.id = letter;
+      btn.addEventListener('click', () => handleGuess(letter));
+      rowEl.appendChild(btn);
+    }
+    keyboard.appendChild(rowEl);
+  });
 }
 
 function startGame() {
   const random = wordList[Math.floor(Math.random() * wordList.length)];
   selectedWord = random.word;
-  hintText.textContent = `Hint: ${random.hint}`;
+  hintText.innerHTML = `<strong>Hint:</strong> ${random.hint}`;
   guessedLetters = [];
   wrongGuesses = 0;
   message.textContent = '';
-    winEmoji.style.display = 'none';
+  message.className = '';
+  clearTimeout(winOverlayTimer);
+  winEmoji.style.display = 'none';
   drawHangman(0);
   generateKeyboard();
   displayWord();
@@ -188,3 +202,21 @@ function startGame() {
 
 restartBtn.addEventListener('click', startGame);
 window.onload = startGame;
+
+// ---------- Floating background bubbles ----------
+(function createBubbles() {
+  const count = 18;
+  for (let i = 0; i < count; i++) {
+    const bubble = document.createElement('div');
+    bubble.classList.add('bubble');
+    const size = Math.random() * 60 + 20;
+    bubble.style.width  = `${size}px`;
+    bubble.style.height = `${size}px`;
+    bubble.style.left   = `${Math.random() * 100}%`;
+    const duration = 12 + Math.random() * 14;
+    const delay    = Math.random() * 12;
+    bubble.style.animationDuration = `${duration}s`;
+    bubble.style.animationDelay    = `-${delay}s`;   // stagger so they don't all start at once
+    document.body.appendChild(bubble);
+  }
+})();
